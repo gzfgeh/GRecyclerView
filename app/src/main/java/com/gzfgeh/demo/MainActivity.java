@@ -71,7 +71,6 @@ public class MainActivity extends AutoLayoutActivity implements RecyclerArrayAda
         recyclerView.setErrorBtnID(R.id.btn);
         onRefresh();
     }
-
     //第四页会返回空,意为数据加载结束
     @Override
     public void onLoadMore() {
