@@ -48,6 +48,10 @@ public class GRecyclerView extends FrameLayout {
     protected SwipeRefreshLayout mPtrLayout;
     protected android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener mRefreshListener;
 
+    public SwipeRefreshLayout getmPtrLayout(){
+        return mPtrLayout;
+    }
+
     public RecyclerView getRecyclerView() {
         return mRecycler;
     }
