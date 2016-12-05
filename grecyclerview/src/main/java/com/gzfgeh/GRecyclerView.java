@@ -3,6 +3,7 @@ package com.gzfgeh;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.support.annotation.ColorRes;
+import android.support.annotation.IdRes;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.AdapterDataObserver;
@@ -401,8 +402,15 @@ public class GRecyclerView extends FrameLayout {
 
     }
 
-    public void setErrorBtnID(int resID){
+    public GRecyclerView setErrorBtnID(@IdRes int resID){
         this.mErrorBtnId = resID;
+        mEmptyView.findViewById(resID).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mRefreshListener.onRefresh();
+            }
+        });
+        return this;
     }
 
     public void resumeFromError(){
@@ -560,7 +568,7 @@ public class GRecyclerView extends FrameLayout {
      * @param listener
      * @param refreshListener
      */
-    public void setAdapterDefaultConfig(RecyclerArrayAdapter adapter, android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener refreshListener, RecyclerArrayAdapter.OnLoadMoreListener listener){
+    public GRecyclerView setAdapterDefaultConfig(RecyclerArrayAdapter adapter, android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener refreshListener, RecyclerArrayAdapter.OnLoadMoreListener listener){
         if (adapter != null) {
             if(listener != null)
                 adapter.setMore(listener);
@@ -571,6 +579,7 @@ public class GRecyclerView extends FrameLayout {
             addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL_LIST));
             setAdapterWithProgress(adapter);
         }
+        return this;
     }
 
     /**
@@ -578,7 +587,7 @@ public class GRecyclerView extends FrameLayout {
      * @param adapter
      * @param refreshListener
      */
-    public void setAdapterDefaultConfig(RecyclerArrayAdapter adapter, android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener refreshListener){
+    public GRecyclerView setAdapterDefaultConfig(RecyclerArrayAdapter adapter, android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener refreshListener){
         if (adapter != null) {
             adapter.setNoMore(R.layout.view_nomore);
             adapter.setError(R.layout.view_error);
@@ -587,6 +596,7 @@ public class GRecyclerView extends FrameLayout {
             addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL_LIST));
             setAdapterWithProgress(adapter);
         }
+        return this;
     }
 
     private static void log(String content){

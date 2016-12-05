@@ -67,8 +67,8 @@ public class MainActivity extends AutoLayoutActivity implements RecyclerArrayAda
 
             }
         });
-        recyclerView.setAdapterDefaultConfig(adapter, this, this);
-        recyclerView.setErrorBtnID(R.id.btn);
+        recyclerView.setAdapterDefaultConfig(adapter, this, this)
+                .setErrorBtnID(R.id.btn);
         onRefresh();
     }
     //第四页会返回空,意为数据加载结束
