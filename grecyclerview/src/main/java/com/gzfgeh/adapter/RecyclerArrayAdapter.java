@@ -665,7 +665,16 @@ abstract public class RecyclerArrayAdapter<T> extends RecyclerView.Adapter<BaseV
         OnBindViewHolder(holder,position-headers.size());
     }
 
-//    public void OnBindViewHolder(BaseViewHolder holder, final int position){
+    @Override
+    public void onBindViewHolder(BaseViewHolder holder, int position, List payloads) {
+        if (payloads.isEmpty()){
+            onBindViewHolder(holder, position);
+        }else{
+            convert(holder, getAllData().get(position));
+        }
+    }
+
+    //    public void OnBindViewHolder(BaseViewHolder holder, final int position){
 //        holder.setData(getItem(position));
 //    }
 
