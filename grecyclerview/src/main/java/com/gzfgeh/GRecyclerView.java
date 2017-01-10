@@ -464,6 +464,7 @@ public class GRecyclerView extends FrameLayout {
             @Override
             public void run() {
                 mPtrLayout.setRefreshing(isRefreshing);
+                showError();
             }
         });
     }
@@ -475,6 +476,7 @@ public class GRecyclerView extends FrameLayout {
                 mPtrLayout.setRefreshing(isRefreshing);
                 if (isRefreshing&&isCallbackListener&&mRefreshListener!=null){
                     mRefreshListener.onRefresh();
+                    showError();
                 }
             }
         });

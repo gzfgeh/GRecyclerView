@@ -9,7 +9,6 @@
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:scrollbarStyle="insideOverlay"
-        app:layout_error_no_item="@layout/view_no_error"/>
+        app:scrollbarStyle="insideOverlay"/>
 
 </FrameLayout>
