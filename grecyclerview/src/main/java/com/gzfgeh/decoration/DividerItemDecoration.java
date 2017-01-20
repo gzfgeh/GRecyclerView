@@ -5,8 +5,10 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 
 /**
@@ -18,6 +20,7 @@ import android.view.View;
  */
 
 public class DividerItemDecoration extends RecyclerView.ItemDecoration {
+    private Rect rect;
 
     private static final int[] ATTRS = new int[]{
             android.R.attr.listDivider
@@ -31,11 +34,12 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration {
 
     private int mOrientation;
 
-    public DividerItemDecoration(Context context, int orientation) {
+    public DividerItemDecoration(Context context, int orientation, @NonNull Rect rect) {
         final TypedArray a = context.obtainStyledAttributes(ATTRS);
         mDivider = a.getDrawable(0);
         a.recycle();
         setOrientation(orientation);
+        this.rect = rect;
     }
 
     public void setOrientation(int orientation) {
@@ -68,7 +72,7 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration {
                     .getLayoutParams();
             final int top = child.getBottom() + params.bottomMargin;
             final int bottom = top + mDivider.getIntrinsicHeight();
-            mDivider.setBounds(left, top, right, bottom);
+            mDivider.setBounds(left + rect.left, top+rect.top, right+rect.right, bottom+rect.bottom);
             mDivider.draw(c);
         }
     }
@@ -84,7 +88,7 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration {
                     .getLayoutParams();
             final int left = child.getRight() + params.rightMargin;
             final int right = left + mDivider.getIntrinsicHeight();
-            mDivider.setBounds(left, top, right, bottom);
+            mDivider.setBounds(left + rect.left, top+rect.top, right+rect.right, bottom+rect.bottom);
             mDivider.draw(c);
         }
     }
@@ -96,5 +100,13 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration {
         } else {
             outRect.set(0, 0, mDivider.getIntrinsicWidth(), 0);
         }
+    }
+
+    /**
+     * 设置分割线
+     * @param rect
+     */
+    public void setRect(Rect rect) {
+        this.rect = rect;
     }
 }

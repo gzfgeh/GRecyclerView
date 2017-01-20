@@ -23,6 +23,10 @@
             <enum name="horizontal" value="0"/>
             <enum name="none" value="2"/>
         </attr>
+        <attr name="dividerPaddingTop" format="dimension" />
+        <attr name="dividerPaddingBottom" format="dimension" />
+        <attr name="dividerPaddingLeft" format="dimension" />
+        <attr name="dividerPaddingRight" format="dimension" />
     </declare-styleable>
 
 

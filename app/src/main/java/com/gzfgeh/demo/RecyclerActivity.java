@@ -1,12 +1,15 @@
 package com.gzfgeh.demo;
 
+import android.graphics.Rect;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.gzfgeh.GRecyclerView;
 import com.gzfgeh.adapter.BaseViewHolder;
 import com.gzfgeh.adapter.RecyclerArrayAdapter;
+import com.gzfgeh.decoration.DividerItemDecoration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +35,7 @@ public class RecyclerActivity extends AppCompatActivity {
         getData();
         adapter.addAll(list);
         recyclerView.setAdapter(adapter);
+        recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST, new Rect(50, 0, 0, 0)));
 
         adapter.setOnItemClickListener(new RecyclerArrayAdapter.OnItemClickListener() {
             @Override

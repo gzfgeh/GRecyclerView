@@ -2,6 +2,7 @@ package com.gzfgeh;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Rect;
 import android.support.annotation.ColorRes;
 import android.support.annotation.IdRes;
 import android.support.v7.widget.LinearLayoutManager;
@@ -42,6 +43,12 @@ public class GRecyclerView extends FrameLayout {
     protected int mPaddingRight;
     protected int mScrollbarStyle;
     protected int mScrollbar;
+
+    protected int mDividerPaddingTop;
+    protected int mDividerPaddingBottom;
+    protected int mDividerPaddingLeft;
+    protected int mDividerPaddingRight;
+    private Rect rect;
 
     protected RecyclerView.OnScrollListener mInternalOnScrollListener;
     protected RecyclerView.OnScrollListener mExternalOnScrollListener;
@@ -90,6 +97,12 @@ public class GRecyclerView extends FrameLayout {
             mProgressId = a.getResourceId(R.styleable.superrecyclerview_layout_progress, 0);
             mErrorId = a.getResourceId(R.styleable.superrecyclerview_layout_error, 0);
             mErrorNoItemId = a.getResourceId(R.styleable.superrecyclerview_layout_error_no_item, 0);
+
+            mDividerPaddingTop = (int) a.getDimension(R.styleable.superrecyclerview_dividerPaddingTop, 0.0f);
+            mDividerPaddingBottom = (int) a.getDimension(R.styleable.superrecyclerview_dividerPaddingBottom, 0.0f);
+            mDividerPaddingLeft = (int) a.getDimension(R.styleable.superrecyclerview_dividerPaddingLeft, 0.0f);
+            mDividerPaddingRight = (int) a.getDimension(R.styleable.superrecyclerview_dividerPaddingRight, 0.0f);
+            rect = new Rect(mDividerPaddingLeft, mDividerPaddingTop, mDividerPaddingRight, mDividerPaddingBottom);
         } finally {
             a.recycle();
         }
@@ -578,7 +591,7 @@ public class GRecyclerView extends FrameLayout {
             adapter.setError(R.layout.view_error);
             if (refreshListener != null)
                 setRefreshListener(refreshListener);
-            addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL_LIST));
+            addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL_LIST, rect));
             setAdapterWithProgress(adapter);
         }
         return this;
@@ -595,7 +608,7 @@ public class GRecyclerView extends FrameLayout {
             adapter.setError(R.layout.view_error);
             if (refreshListener != null)
                 setRefreshListener(refreshListener);
-            addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL_LIST));
+            addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL_LIST, rect));
             setAdapterWithProgress(adapter);
         }
         return this;
