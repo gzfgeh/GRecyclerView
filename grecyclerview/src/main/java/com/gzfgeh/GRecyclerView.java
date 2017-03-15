@@ -3,8 +3,10 @@ package com.gzfgeh;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Rect;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.ColorRes;
 import android.support.annotation.IdRes;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.AdapterDataObserver;
@@ -18,6 +20,8 @@ import android.widget.FrameLayout;
 
 import com.gzfgeh.adapter.RecyclerArrayAdapter;
 import com.gzfgeh.decoration.DividerItemDecoration;
+import com.gzfgeh.defaultInterface.DefaultFloatActionButtonListener;
+import com.gzfgeh.defaultInterface.FloatActionButtonListener;
 import com.gzfgeh.grecyclerview.R;
 import com.gzfgeh.swipeheader.SwipeRefreshLayout;
 
@@ -29,6 +33,7 @@ public class GRecyclerView extends FrameLayout {
     protected ViewGroup mProgressView;
     protected ViewGroup mEmptyView;
     protected ViewGroup mErrorView;
+    private FloatingActionButton mFloatButton;
     private int mProgressId;
     private int mEmptyId;
     private int mErrorId;
@@ -52,6 +57,8 @@ public class GRecyclerView extends FrameLayout {
 
     protected RecyclerView.OnScrollListener mInternalOnScrollListener;
     protected RecyclerView.OnScrollListener mExternalOnScrollListener;
+    private FloatActionButtonListener floatActionButtonListener = new DefaultFloatActionButtonListener();
+    private boolean isCreateFloatShow =false;
 
     protected SwipeRefreshLayout mPtrLayout;
     protected android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener mRefreshListener;
@@ -117,6 +124,8 @@ public class GRecyclerView extends FrameLayout {
 
         mPtrLayout = (SwipeRefreshLayout) v.findViewById(R.id.ptr_layout);
         mPtrLayout.setEnabled(false);
+
+        mFloatButton = (FloatingActionButton) v.findViewById(R.id.fat);
 
         mProgressView = (ViewGroup) v.findViewById(R.id.progress);
         if (mProgressId==0)
@@ -214,7 +223,7 @@ public class GRecyclerView extends FrameLayout {
                         else
                             ((RecyclerArrayAdapter)(mRecycler.getAdapter())).setLoadItemAnimator(true);
                     }
-
+                    floatActionButtonListener.recyclerViewOnScroll(mFloatButton,mRecycler);
                     if (mExternalOnScrollListener != null)
                         mExternalOnScrollListener.onScrolled(recyclerView, dx, dy);
 
@@ -223,6 +232,16 @@ public class GRecyclerView extends FrameLayout {
                 @Override
                 public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                     super.onScrollStateChanged(recyclerView, newState);
+                    if (isCreateFloatShow){
+                        if (recyclerView.getLayoutManager() instanceof LinearLayoutManager){
+                            int pos = ((LinearLayoutManager)(recyclerView.getLayoutManager())).findFirstVisibleItemPosition();
+                            if (pos!=0&&newState==0){
+                                floatActionButtonListener.recyclerViewOnStop(mFloatButton,mRecycler);
+                            }else if (pos==0&&newState==0){
+                                floatActionButtonListener.recyclerViewOnTop(mFloatButton,mRecycler);
+                            }
+                        }
+                    }
                     if (mExternalOnScrollListener != null)
                         mExternalOnScrollListener.onScrollStateChanged(recyclerView, newState);
 
@@ -620,4 +639,20 @@ public class GRecyclerView extends FrameLayout {
         }
     }
 
+    public void setFloatActionButtonListener(FloatActionButtonListener floatActionButtonListener) {
+        this.floatActionButtonListener = floatActionButtonListener;
+    }
+
+    public void setCreateFloatShow(boolean createFloatShow) {
+        isCreateFloatShow = createFloatShow;
+    }
+    public void setFloatButtonBackground(Drawable drawable){
+        mFloatButton.setBackgroundDrawable(drawable);
+    }
+    public void setFloatButtonBackgroundColor(int color){
+        mFloatButton.setBackgroundColor(color);
+    }
+    public void setmFloatButtonImageSrc(int resId){
+        mFloatButton.setImageResource(resId);
+    }
 }
