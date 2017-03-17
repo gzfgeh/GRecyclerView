@@ -1,6 +1,7 @@
 package com.gzfgeh;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
@@ -126,6 +127,7 @@ public class GRecyclerView extends FrameLayout {
         mPtrLayout.setEnabled(false);
 
         mFloatButton = (FloatingActionButton) v.findViewById(R.id.fat);
+//        mFloatButton.setBackgroundTintList(getResources().getColorStateList(R.color.ff));
 
         mProgressView = (ViewGroup) v.findViewById(R.id.progress);
         if (mProgressId==0)
@@ -646,13 +648,22 @@ public class GRecyclerView extends FrameLayout {
     public void setCreateFloatShow(boolean createFloatShow) {
         isCreateFloatShow = createFloatShow;
     }
-    public void setFloatButtonBackground(Drawable drawable){
-        mFloatButton.setBackgroundDrawable(drawable);
+    public void setFloatSrc(Drawable drawable){
+        mFloatButton.setImageDrawable(drawable);
     }
-    public void setFloatButtonBackgroundColor(int color){
-        mFloatButton.setBackgroundColor(color);
+    public void setFloatBackground(ColorStateList tint){
+        mFloatButton.setBackgroundTintList(tint);
     }
-    public void setmFloatButtonImageSrc(int resId){
-        mFloatButton.setImageResource(resId);
+    /**
+     * 设置按钮的阴影宽度
+     * */
+    public void setFloatelevation(float elevation){
+        mFloatButton.setCompatElevation(elevation);
+    }
+    /**
+     * 设置按钮按下去的颜色
+     * */
+    public void setFloatRipperColor(int color){
+        mFloatButton.setRippleColor(color);
     }
 }
