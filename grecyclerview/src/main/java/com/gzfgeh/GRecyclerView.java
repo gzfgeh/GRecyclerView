@@ -458,6 +458,17 @@ public class GRecyclerView extends FrameLayout {
         log("showRecycler");
         hideAll();
         mRecycler.setVisibility(View.VISIBLE);
+
+        //fix bug  如果不满一屏 不能再次加载更多
+        if (mRecycler.getLayoutManager() instanceof LinearLayoutManager) {
+            LinearLayoutManager linearManager = (LinearLayoutManager) mRecycler.getLayoutManager();
+
+            //获取第一个可见view的位置
+            int firstItemPosition = linearManager.findFirstVisibleItemPosition();
+            if (0 == firstItemPosition){
+                ((RecyclerArrayAdapter)(mRecycler.getAdapter())).stopMore();
+            }
+        }
     }
 
 
