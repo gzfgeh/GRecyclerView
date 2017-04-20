@@ -34,6 +34,7 @@ public class MainActivity extends AutoLayoutActivity implements RecyclerArrayAda
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         recyclerView = (GRecyclerView) findViewById(R.id.recyclerView);
+        recyclerView.setCreateFloatShow(true);
         adapter = new RecyclerArrayAdapter<Person>(this, R.layout.item_person){
 
             @Override
