@@ -290,6 +290,29 @@ public class GRecyclerView extends FrameLayout {
         mRecycler.setLayoutManager(manager);
     }
 
+    /**
+     * 不满一屏 停止load
+     */
+    public void isLessMoreScreen(){
+        //fix bug  如果不满一屏 不能再次加载更多
+        if (getRecyclerView().getLayoutManager() instanceof LinearLayoutManager) {
+            LinearLayoutManager linearManager = (LinearLayoutManager) getRecyclerView().getLayoutManager();
+
+            //获取第一个可见view的位置
+            int firstItemPosition = linearManager.findFirstCompletelyVisibleItemPosition();
+            int lastItemPosition = linearManager.findLastCompletelyVisibleItemPosition();
+            RecyclerArrayAdapter adapter = (RecyclerArrayAdapter) getAdapter();
+            if ((0 == firstItemPosition) && (
+                    (lastItemPosition == adapter.getItemCount()-1) ||
+                            (lastItemPosition == adapter.getCount()-1)
+                    )){
+                adapter.stopMore();
+            }else{
+                adapter.resumeMore();
+            }
+        }
+    }
+
 
     public static class EasyDataObserver extends AdapterDataObserver {
         private GRecyclerView recyclerView;
@@ -343,6 +366,22 @@ public class GRecyclerView extends FrameLayout {
             } else{
                 log("has data");
                 recyclerView.showRecycler();
+            }
+
+            //fix bug  如果不满一屏 不能再次加载更多
+            if (recyclerView.getRecyclerView().getLayoutManager() instanceof LinearLayoutManager) {
+                LinearLayoutManager linearManager = (LinearLayoutManager) recyclerView.getRecyclerView().getLayoutManager();
+
+                //获取第一个可见view的位置
+                int firstItemPosition = linearManager.findFirstCompletelyVisibleItemPosition();
+                int lastItemPosition = linearManager.findLastCompletelyVisibleItemPosition();
+                RecyclerArrayAdapter adapter = (RecyclerArrayAdapter) recyclerView.getAdapter();
+                if ((0 == firstItemPosition) && adapter.getCount() != 0 && (
+                        (lastItemPosition == adapter.getItemCount()-1) ||
+                                (lastItemPosition == adapter.getCount()-1)
+                )){
+                    adapter.stopMore();
+                }
             }
         }
     }
@@ -479,17 +518,6 @@ public class GRecyclerView extends FrameLayout {
         log("showRecycler");
         hideAll();
         mRecycler.setVisibility(View.VISIBLE);
-
-        //fix bug  如果不满一屏 不能再次加载更多
-        if (mRecycler.getLayoutManager() instanceof LinearLayoutManager) {
-            LinearLayoutManager linearManager = (LinearLayoutManager) mRecycler.getLayoutManager();
-
-            //获取第一个可见view的位置
-            int firstItemPosition = linearManager.findFirstVisibleItemPosition();
-            if (0 == firstItemPosition){
-                ((RecyclerArrayAdapter)(mRecycler.getAdapter())).stopMore();
-            }
-        }
     }
 
 
