@@ -45,9 +45,10 @@
         
 15、 使用
 
-    Add it in your root build.gradle at the end of repositories: <br>  
-        maven { url "https://jitpack.io" } <br>  
-    Add the dependency  <br>  
-	    compile 'com.github.gzfgeh:GRecyclerView:v1.0.1' 
-	
+```java
+    Add it in your root build.gradle at the end of repositories: 
+        maven { url "https://jitpack.io" } 
+    Add the dependency  
+        compile 'com.github.gzfgeh:GRecyclerView:v1.0.1' 
+```
     
