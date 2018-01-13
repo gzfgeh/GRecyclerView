@@ -502,6 +502,14 @@ abstract public class RecyclerArrayAdapter<T> extends RecyclerView.Adapter<BaseV
         log("remove notifyItemRemoved "+(headers.size()+position));
     }
 
+    public void update(T object,int pos){
+        synchronized (mLock) {
+            mObjects.set(pos,object);
+        }
+        if (mNotifyOnChange) notifyItemChanged(pos);
+        log("insertAll notifyItemChanged "+pos);
+    }
+
 
     /**
      * 触发清空

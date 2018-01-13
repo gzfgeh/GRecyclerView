@@ -27,7 +27,10 @@
             android:name="design_height"
             android:value="1920" />
 
-        <!--<activity android:name=".RecyclerActivity"/>-->
+        <activity android:name=".StickyHeaderActivity"/>
+        <activity android:name=".NormalActivity"/>
+        <activity android:name=".ChangeItemActivity"/>
+        <activity android:name=".HorizontalActivity"/>
     </application>
 
 </manifest>
