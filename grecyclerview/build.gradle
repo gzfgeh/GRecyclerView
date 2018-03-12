@@ -22,7 +22,7 @@ dependencies {
     provided 'com.android.support:recyclerview-v7:26.0.2'
     compile 'com.zhy:autolayout:1.4.3'
     compile 'com.github.bumptech.glide:glide:3.7.0'
-    compile 'com.github.gzfgeh:GSwipeRefresh:v1.0.4'
+    compile 'com.github.gzfgeh:GSwipeRefresh:v1.0.5'
     compile 'com.android.support:design:26.0.2'
 
 }
